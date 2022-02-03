@@ -1,0 +1,6 @@
+.idea
+.vscode
+venv
+*.pyc
+db.json.lock
+.gitpod.yml
