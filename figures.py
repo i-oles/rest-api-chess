@@ -18,14 +18,14 @@ class Figure(ABC):
 
 class Pawn(Figure):
     def __init__(self, current_field: str):
-        self.current_field = current_field.lower()
-        self.figure = 'pawn'
+        self.current_field = current_field
+        self.figure = "pawn"
 
     def list_available_moves(self):
         board = chess.Board(fen=None)
-        field = chess.parse_square(self.current_field)
+        field = chess.parse_square(self.current_field.lower())
         board.set_piece_at(field, chess.Piece.from_symbol("P"))
-        return [board.san(move)[1:].capitalize() for move in board.legal_moves]
+        return [board.san(move).capitalize()[:2] for move in board.legal_moves]
 
     def validate_move(self, dest_field):
         return dest_field.capitalize() in self.list_available_moves()
@@ -34,7 +34,7 @@ class Pawn(Figure):
 class Knight(Figure):
     def __init__(self, current_field: str):
         self.current_field = current_field.lower()
-        self.figure = 'knight'
+        self.figure = "knight"
 
     def list_available_moves(self):
         board = chess.Board(fen=None)
@@ -49,7 +49,7 @@ class Knight(Figure):
 class Bishop(Figure):
     def __init__(self, current_field: str):
         self.current_field = current_field.lower()
-        self.figure = 'bishop'
+        self.figure = "bishop"
 
     def list_available_moves(self):
         board = chess.Board(fen=None)
@@ -64,7 +64,7 @@ class Bishop(Figure):
 class Rook(Figure):
     def __init__(self, current_field: str):
         self.current_field = current_field.lower()
-        self.figure = 'rook'
+        self.figure = "rook"
 
     def list_available_moves(self):
         board = chess.Board(fen=None)
@@ -79,7 +79,7 @@ class Rook(Figure):
 class Queen(Figure):
     def __init__(self, current_field: str):
         self.current_field = current_field.lower()
-        self.figure = 'queen'
+        self.figure = "queen"
 
     def list_available_moves(self):
         board = chess.Board(fen=None)
@@ -94,7 +94,7 @@ class Queen(Figure):
 class King(Figure):
     def __init__(self, current_field: str):
         self.current_field = current_field.lower()
-        self.figure = 'king'
+        self.figure = "king"
 
     def list_available_moves(self):
         board = chess.Board(fen=None)
@@ -104,4 +104,3 @@ class King(Figure):
 
     def validate_move(self, dest_field):
         return dest_field.capitalize() in self.list_available_moves()
-
