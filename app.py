@@ -23,7 +23,7 @@ app = Flask(__name__)
 
 
 figures = {
-    'pawn': Pawn,
+    'pawn' : Pawn,
     'knight': Knight,
     'bishop': Bishop,
     'rook': Rook,
@@ -34,35 +34,16 @@ figures = {
 
 def field_exist(current_field):
     try:
-        chess.parse_square(current_field)
+        return chess.parse_square(current_field)
     except ValueError:
         return False
-   
-
-def json_validate_move(cls, current_field, chess_figure, dest_field):
-    piece = cls(current_field)
-    if field_exist(current_field) == False:
-        move = piece.validate_move(dest_field)
-        return {
-            'move': move,
-            "figure": chess_figure,
-            "error": 'Current move is not permitted',
-            "currentField": current_field.capitalize(),
-            "destField": dest_field.capitalize()
-            }
-    else:
-        move = piece.validate_move(dest_field)
-        return {
-            'move': move,
-            "figure": chess_figure,
-            "error": 'null',
-            "currentField": current_field.capitalize(),
-            "destField": dest_field.capitalize()
-            }
 
 
-def json_available_moves(cls, current_field, chess_figure):
-    piece = cls(current_field)
+@app.route("/api/v1/<chess_figure>/<current_field>", methods=['GET'])
+def get_available_moves(chess_figure, current_field):
+
+    piece = figures[chess_figure](current_field)
+    
     if field_exist(current_field) == False:
         return {
             'availableMoves': [],
@@ -78,22 +59,31 @@ def json_available_moves(cls, current_field, chess_figure):
             "figure": chess_figure,
             "currentField": current_field.capitalize()
             }
-
-
-
-
-@app.route("/api/v1/<chess_figure>/<current_field>", methods=['GET'])
-def get_available_moves(chess_figure, current_field):
-    if chess_figure == 'pawn':
-        return json_available_moves(Pawn, current_field, chess_figure)
     
 
 @app.route("/api/v1/<chess_figure>/<current_field>/<dest_field>", methods=['GET'])
 def validate_move(chess_figure, current_field, dest_field):
-    if chess_figure == 'pawn':
-        return json_validate_move(Pawn, current_field, chess_figure, dest_field)
 
+    piece = figures[chess_figure](current_field)
 
+    if field_exist(current_field):
+        if piece.validate_move(dest_field):
+            error = "null"
+            move = 'valid'
+        else:
+            move = "invalid"
+            error = "Current move is not permitted"
+    else:
+        move = "invalid"
+        error = "Current move is not permitted" 
+
+    return {
+        'move': move,
+        "figure": chess_figure,
+        "error": error,
+        "currentField": current_field.capitalize(),
+        "destField": dest_field.capitalize()
+        }
 
 
 if __name__ == '__main__':

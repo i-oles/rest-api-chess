@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+import chess
 
 
 class Figure(ABC):
@@ -17,91 +18,90 @@ class Figure(ABC):
 
 class Pawn(Figure):
     def __init__(self, current_field: str):
-        self.current_field = current_field
+        self.current_field = current_field.lower()
         self.figure = 'pawn'
 
     def list_available_moves(self):
-        letter = self.current_field[0].upper()
-        rank = int(self.current_field[1:])
-        if rank == 2:
-            return [
-                letter + str(rank + 1),
-                letter + str(rank + 2)
-                ]
-        elif rank == 8:
-            return []
-        else:
-            return [letter + str(rank + 1)]
+        board = chess.Board(fen=None)
+        field = chess.parse_square(self.current_field)
+        board.set_piece_at(field, chess.Piece.from_symbol("P"))
+        return [board.san(move)[1:].capitalize() for move in board.legal_moves]
 
     def validate_move(self, dest_field):
-        if dest_field.capitalize() in self.list_available_moves():
-            return 'valid'
-        else:
-            return 'invalid'
+        return dest_field.capitalize() in self.list_available_moves()
 
 
 class Knight(Figure):
     def __init__(self, current_field: str):
-        self.current_field = current_field
+        self.current_field = current_field.lower()
         self.figure = 'knight'
 
     def list_available_moves(self):
-        pass
+        board = chess.Board(fen=None)
+        field = chess.parse_square(self.current_field)
+        board.set_piece_at(field, chess.Piece.from_symbol("N"))
+        return [board.san(move)[1:].capitalize() for move in board.legal_moves]
 
     def validate_move(self, dest_field):
-        pass
+        return dest_field.capitalize() in self.list_available_moves()
 
 
 class Bishop(Figure):
     def __init__(self, current_field: str):
-        self.current_field = current_field
+        self.current_field = current_field.lower()
         self.figure = 'bishop'
 
     def list_available_moves(self):
-        pass
+        board = chess.Board(fen=None)
+        field = chess.parse_square(self.current_field)
+        board.set_piece_at(field, chess.Piece.from_symbol("B"))
+        return [board.san(move)[1:].capitalize() for move in board.legal_moves]
 
     def validate_move(self, dest_field):
-        pass
+        return dest_field.capitalize() in self.list_available_moves()
 
 
 class Rook(Figure):
     def __init__(self, current_field: str):
-        self.current_field = current_field
+        self.current_field = current_field.lower()
         self.figure = 'rook'
 
     def list_available_moves(self):
-        pass
+        board = chess.Board(fen=None)
+        field = chess.parse_square(self.current_field)
+        board.set_piece_at(field, chess.Piece.from_symbol("R"))
+        return [board.san(move)[1:].capitalize() for move in board.legal_moves]
 
     def validate_move(self, dest_field):
-        pass
+        return dest_field.capitalize() in self.list_available_moves()
 
 
 class Queen(Figure):
     def __init__(self, current_field: str):
-        self.current_field = current_field
+        self.current_field = current_field.lower()
         self.figure = 'queen'
 
     def list_available_moves(self):
-        pass
+        board = chess.Board(fen=None)
+        field = chess.parse_square(self.current_field)
+        board.set_piece_at(field, chess.Piece.from_symbol("Q"))
+        return [board.san(move)[1:].capitalize() for move in board.legal_moves]
 
     def validate_move(self, dest_field):
-        pass
+        return dest_field.capitalize() in self.list_available_moves()
 
 
 class King(Figure):
     def __init__(self, current_field: str):
-        self.current_field = current_field
+        self.current_field = current_field.lower()
         self.figure = 'king'
 
     def list_available_moves(self):
-        pass
+        board = chess.Board(fen=None)
+        field = chess.parse_square(self.current_field)
+        board.set_piece_at(field, chess.Piece.from_symbol("K"))
+        return [board.san(move)[1:].capitalize() for move in board.legal_moves]
 
     def validate_move(self, dest_field):
-        pass
-
-
-
-
-
-
+        return dest_field.capitalize() in self.list_available_moves()
 
