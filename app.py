@@ -5,7 +5,7 @@ import chess
 
 """
 bugs:
-1. nothing works on a1
+1. test in pawn in uppercase passes, in app not
 2. pawn promotion -> ex. 4 x D8
 3. 'move' can be hardcoded?
 4. null is not in quotes in decription
@@ -16,6 +16,14 @@ bugs:
 9. available_moves -> two dicts?
 10. field validation - the best way?
 11. pawn: a8 -> zwraca error null
+12. pawn: a1 --> zwraca a2, a3
+13. pawn on a1 never stands - ?
+14. validate moves should return bool?
+15. list_available moves should return empty list when invalid input
+16. shoul I validate dest_field
+17. imports in tests folder
+18. test create_king c7 -> C7 is ok?
+19. testing abstrac method? correct?
 
 todo:
 2. move methods to abstract method - make all classes shorter

@@ -33,12 +33,12 @@ class Pawn(Figure):
 
 class Knight(Figure):
     def __init__(self, current_field: str):
-        self.current_field = current_field.lower()
+        self.current_field = current_field
         self.figure = "knight"
 
     def list_available_moves(self):
         board = chess.Board(fen=None)
-        field = chess.parse_square(self.current_field)
+        field = chess.parse_square(self.current_field.lower())
         board.set_piece_at(field, chess.Piece.from_symbol("N"))
         return [board.san(move)[1:].capitalize() for move in board.legal_moves]
 
@@ -48,12 +48,12 @@ class Knight(Figure):
 
 class Bishop(Figure):
     def __init__(self, current_field: str):
-        self.current_field = current_field.lower()
+        self.current_field = current_field
         self.figure = "bishop"
 
     def list_available_moves(self):
         board = chess.Board(fen=None)
-        field = chess.parse_square(self.current_field)
+        field = chess.parse_square(self.current_field.lower())
         board.set_piece_at(field, chess.Piece.from_symbol("B"))
         return [board.san(move)[1:].capitalize() for move in board.legal_moves]
 
@@ -63,12 +63,12 @@ class Bishop(Figure):
 
 class Rook(Figure):
     def __init__(self, current_field: str):
-        self.current_field = current_field.lower()
+        self.current_field = current_field
         self.figure = "rook"
 
     def list_available_moves(self):
         board = chess.Board(fen=None)
-        field = chess.parse_square(self.current_field)
+        field = chess.parse_square(self.current_field.lower())
         board.set_piece_at(field, chess.Piece.from_symbol("R"))
         return [board.san(move)[1:].capitalize() for move in board.legal_moves]
 
@@ -78,12 +78,12 @@ class Rook(Figure):
 
 class Queen(Figure):
     def __init__(self, current_field: str):
-        self.current_field = current_field.lower()
+        self.current_field = current_field
         self.figure = "queen"
 
     def list_available_moves(self):
         board = chess.Board(fen=None)
-        field = chess.parse_square(self.current_field)
+        field = chess.parse_square(self.current_field.lower())
         board.set_piece_at(field, chess.Piece.from_symbol("Q"))
         return [board.san(move)[1:].capitalize() for move in board.legal_moves]
 
@@ -93,12 +93,12 @@ class Queen(Figure):
 
 class King(Figure):
     def __init__(self, current_field: str):
-        self.current_field = current_field.lower()
+        self.current_field = current_field
         self.figure = "king"
 
     def list_available_moves(self):
         board = chess.Board(fen=None)
-        field = chess.parse_square(self.current_field)
+        field = chess.parse_square(self.current_field.lower())
         board.set_piece_at(field, chess.Piece.from_symbol("K"))
         return [board.san(move)[1:].capitalize() for move in board.legal_moves]
 
