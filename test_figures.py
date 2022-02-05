@@ -6,16 +6,15 @@ from unittest.mock import patch
 class FigureTest(TestCase):
     @patch("figures.Figure.__abstractmethods__", set())
     def test_create_figure(self):
-        figure = Figure('H2', 'rook')
-        self.assertEqual(figure.current_field, 'H2')
-        self.assertEqual(figure.figure, 'rook')
+        figure = Figure("H2")
+        self.assertEqual(figure.current_field, "H2")
 
     def test_list_available_moves(self):
         pass
 
     def test_validate_move(self):
         pass
-    
+
 
 class PawnTest(TestCase):
     def test_pawn_create(self):
@@ -35,8 +34,8 @@ class PawnTest(TestCase):
         # pawn = Pawn('b7')
         # self.assertListEqual(pawn.list_available_moves(), ['B8'])
 
-        # pawn = Pawn('bb')
-        # self.assertListEqual(pawn.list_available_moves(), [])
+        pawn = Pawn("bb")
+        self.assertListEqual(pawn.list_available_moves(), [])
 
     def test_validate_move(self):
         pawn = Pawn("h6")
@@ -45,8 +44,8 @@ class PawnTest(TestCase):
         pawn = Pawn("g6")
         self.assertFalse(pawn.validate_move("h9"))
 
-        # pawn = Pawn('bb')
-        # self.assertFalse(pawn.validate_move('h8'))
+        pawn = Pawn("bb")
+        self.assertFalse(pawn.validate_move("h8"))
 
 
 class KnightTest(TestCase):
@@ -63,8 +62,8 @@ class KnightTest(TestCase):
         expected = sorted(["B7", "C6", "C4", "B3"])
         self.assertListEqual(sorted(knight.list_available_moves()), expected)
 
-        # knight = Knight('hh')
-        # self.assertListEqual(knight.list_available_moves(), [])
+        knight = Knight("hh")
+        self.assertListEqual(knight.list_available_moves(), [])
 
     def test_validate_move(self):
         knight = Knight("d7")
@@ -73,8 +72,8 @@ class KnightTest(TestCase):
         knight = Knight("g6")
         self.assertFalse(knight.validate_move("h9"))
 
-        # knight = Knight('bb')
-        # self.assertFalse(knight.validate_move('h8'))
+        knight = Knight("bb")
+        self.assertFalse(knight.validate_move("h8"))
 
 
 class BishopTest(TestCase):
@@ -95,8 +94,8 @@ class BishopTest(TestCase):
         expected = sorted(["B2", "C3", "D4", "E5", "F6", "G7", "H8"])
         self.assertListEqual(sorted(bishop.list_available_moves()), expected)
 
-        # bishop = Bishop('ee')
-        # self.assertListEqual(bishop.list_available_moves(), [])
+        bishop = Bishop("ee")
+        self.assertListEqual(bishop.list_available_moves(), [])
 
     def test_validate_move(self):
         bishop = Bishop("h7")
@@ -108,8 +107,8 @@ class BishopTest(TestCase):
         bishop = Bishop("G7")
         self.assertFalse(bishop.validate_move("G10"))
 
-        # bishop = Bishop('f')
-        # self.assertFalse(bishop.validate_move('a5'))
+        bishop = Bishop("f")
+        self.assertFalse(bishop.validate_move("a5"))
 
 
 class RookTest(TestCase):
@@ -181,8 +180,8 @@ class RookTest(TestCase):
         )
         self.assertListEqual(sorted(rook.list_available_moves()), expected)
 
-        # rook = Rook('')
-        # self.assertListEqual(rook.list_available_moves(), [])
+        rook = Rook("")
+        self.assertListEqual(rook.list_available_moves(), [])
 
     def test_validate_move(self):
         rook = Rook("e4")
@@ -194,8 +193,8 @@ class RookTest(TestCase):
         rook = Rook("f2")
         self.assertFalse(rook.validate_move("G8"))
 
-        # rook = Rook('..')
-        # self.assertFalse(rook.validate_move(';;'))
+        rook = Rook("..")
+        self.assertFalse(rook.validate_move(";;"))
 
 
 class QueenTest(TestCase):
@@ -210,8 +209,8 @@ class QueenTest(TestCase):
         queen = Queen("D4")
         expected = sorted(
             [
-                "H8", 
-                "D8", 
+                "H8",
+                "D8",
                 "G7",
                 "D7",
                 "A7",
@@ -230,12 +229,12 @@ class QueenTest(TestCase):
                 "A4",
                 "E3",
                 "D3",
-                "C3", 
-                "F2", 
-                "D2", 
-                "B2", 
-                "G1", 
-                "D1", 
+                "C3",
+                "F2",
+                "D2",
+                "B2",
+                "G1",
+                "D1",
                 "A1",
             ]
         )
@@ -244,33 +243,33 @@ class QueenTest(TestCase):
         queen = Queen("a8")
         expected = sorted(
             [
-                "H8", 
-                "G8", 
-                "F8", 
-                "E8", 
-                "D8", 
-                "C8", 
-                "B8", 
-                "B7", 
-                "A7", 
-                "C6", 
-                "A6", 
-                "D5", 
-                "A5", 
-                "E4", 
-                "A4", 
-                "F3", 
-                "A3", 
-                "G2", 
-                "A2", 
-                "H1", 
-                "A1"
+                "H8",
+                "G8",
+                "F8",
+                "E8",
+                "D8",
+                "C8",
+                "B8",
+                "B7",
+                "A7",
+                "C6",
+                "A6",
+                "D5",
+                "A5",
+                "E4",
+                "A4",
+                "F3",
+                "A3",
+                "G2",
+                "A2",
+                "H1",
+                "A1",
             ]
         )
         self.assertListEqual(sorted(queen.list_available_moves()), expected)
 
-        #queen = Queen("9")
-        #self.assertListEqual(queen.list_available_moves(), [])
+        queen = Queen("9")
+        self.assertListEqual(queen.list_available_moves(), [])
 
     def test_validate_move(self):
         queen = Queen("e1")
@@ -282,8 +281,8 @@ class QueenTest(TestCase):
         queen = Queen("h1")
         self.assertFalse(queen.validate_move("f5"))
 
-        #queen = Queen("8")
-        #self.assertFalse(queen.validate_move('a4'))
+        queen = Queen("8")
+        self.assertFalse(queen.validate_move("a4"))
 
 
 class KingTest(TestCase):
@@ -300,11 +299,11 @@ class KingTest(TestCase):
         self.assertListEqual(sorted(king.list_available_moves()), expected)
 
         king = King("H1")
-        expected = sorted(["G1","G2","H2"])
+        expected = sorted(["G1", "G2", "H2"])
         self.assertListEqual(sorted(king.list_available_moves()), expected)
 
-        #king = King("d55")
-        #self.assertListEqual(king.list_available_moves(), [])
+        king = King("d55")
+        self.assertListEqual(king.list_available_moves(), [])
 
     def test_validate_move(self):
         king = King("a4")
@@ -316,5 +315,5 @@ class KingTest(TestCase):
         king = King("c8")
         self.assertFalse(king.validate_move("a1"))
 
-        #king = King("a10")
-        #self.assertFalse(king.validate_move('a11'))
+        king = King("a10")
+        self.assertFalse(king.validate_move("a11"))
