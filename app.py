@@ -9,6 +9,8 @@ bugs:
 2. pawn: a8 -> zwraca error null
 3. pawn: a1 --> zwraca a2, a3
 4. pawn on a1 never stands - ?
+
+questions:
 5. test create_king c7 -> C7 is ok?
 6. null is not in quotes in decription
 7. second GET - 'field does not exist' - is it necessary?
@@ -19,14 +21,14 @@ bugs:
 12. abstract method - correct?
 
 1. flake8 - line 68 too long
-2. pip freeze -> too many imports
+2. pip freeze -> too many imports?
 3. imports in tests folder
+4. in readme only valid cases?
 
 
 todo:
 4. security
 5. validate response status codes
-6. write readme.md
 
 """
 
@@ -62,7 +64,7 @@ def get_available_moves(chess_figure, current_field):
 
 
 @app.route("/api/v1/<chess_figure>/<current_field>/<dest_field>", methods=["GET"])
-def validate_move(chess_figure, current_field, dest_field):
+def get_validate_move(chess_figure, current_field, dest_field):
 
     piece = figures[chess_figure](current_field)
 
