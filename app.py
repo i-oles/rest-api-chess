@@ -6,7 +6,7 @@ import chess
 """
 bugs:
 1. pawn promotion -> ex. 4 x D8
-2. pawn: a8 -> zwraca error null
+2. pawn: a8 -> zwraca error null, albo error field does not exist
 3. pawn: a1 --> zwraca a2, a3
 4. pawn on a1 never stands - ?
 
@@ -19,6 +19,7 @@ questions:
 10. should I validate dest_field
 11. testing abstrac method? correct?
 12. abstract method - correct?
+13. comments?
 
 1. flake8 - line 68 too long
 2. pip freeze -> too many imports?
