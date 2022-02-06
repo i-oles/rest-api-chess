@@ -4,14 +4,15 @@ from flask import Flask
 
 """
 bugs:
-1. pawn promotion -> ex. 4 x D8
-2. pawn: a8 -> zwraca error null, albo error field does not exist
-3. pawn: a1 --> zwraca a2, a3
-4. pawn on a1 never stands - ?
+X1. pawn promotion -> ex. 4 x D8
+X2. pawn: a8 -> zwraca error null, albo error field does not exist
+X3. pawn: a1 --> zwraca a2, a3
+X4. pawn on a1 never stands - ?
 5. testing abstrac method? correct?
-6. abstract method - correct?
-7. figure uppercase not allowed
-8. status codes correct
+X6. abstract method - correct?
+7. status codes correct? where 500?
+8. status 404 -> return whole dict of just error
+9. test 500 status
 
 questions:
 7. test create_king c7 -> C7 is ok?
@@ -49,43 +50,51 @@ figures = {
 
 @app.route("/api/v1/<chess_figure>/<current_field>", methods=["GET"])
 def get_available_moves(chess_figure, current_field):
+    if chess_figure not in figures:
+        return {"error": "Figure does not exist."}, 404
 
     piece = figures[chess_figure](current_field)
-
     if piece.list_available_moves():
-        error = None
+        return {
+            "availableMoves": piece.list_available_moves(),
+            "error": None,
+            "figure": chess_figure,
+            "currentField": current_field.capitalize(),
+        }, 200 
     else:
-        error = "Field does not exist."
-
-    return {
-        "availableMoves": piece.list_available_moves(),
-        "error": error,
-        "figure": chess_figure,
-        "currentField": current_field.capitalize(),
-    }
+        return {
+            "availableMoves": piece.list_available_moves(),
+            "error": "Field does not exist.",
+            "figure": chess_figure,
+            "currentField": current_field.capitalize(),
+        }, 409
 
 
 @app.route(
     "/api/v1/<chess_figure>/<current_field>/<dest_field>", methods=["GET"]
 )  # noqa: E501
 def get_validate_move(chess_figure, current_field, dest_field):
+    if chess_figure not in figures:
+        return {"error": "Figure does not exist."}, 404
 
     piece = figures[chess_figure](current_field)
 
     if piece.validate_move(dest_field):
-        move = "valid"
-        error = None
+        return {
+            "move": "valid",
+            "figure": chess_figure,
+            "error": None,
+            "currentField": current_field.capitalize(),
+            "destField": dest_field.capitalize()
+        }, 200
     else:
-        move = "invalid"
-        error = "Current move is not permitted."
-
-    return {
-        "move": move,
-        "figure": chess_figure,
-        "error": error,
-        "currentField": current_field.capitalize(),
-        "destField": dest_field.capitalize(),
-    }
+        return {
+            "move": "invalid",
+            "figure": chess_figure,
+            "error": "Current move is not permitted.",
+            "currentField": current_field.capitalize(),
+            "destField": dest_field.capitalize(),
+        }, 409
 
 
 if __name__ == "__main__":

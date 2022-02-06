@@ -4,10 +4,20 @@ import json
 
 
 class AppTest(TestCase):
-    def test_get_available_moves(self):
+    def test_get_available_moves_check_status_200(self):
         with app.test_client(self) as client:
             resp = client.get("/api/v1/queen/f8")
             self.assertEqual(resp.status_code, 200)
+    
+    def test_get_available_moves_check_status_409(self):
+        with app.test_client(self) as client:
+            resp = client.get("/api/v1/queen/g10")
+            self.assertEqual(resp.status_code, 409)
+    
+    def test_get_available_moves_check_status_404(self):
+        with app.test_client(self) as client:
+            resp = client.get("/api/v1/quen/g1")
+            self.assertEqual(resp.status_code, 404)
 
     def test_get_available_moves_contetnt(self):
         with app.test_client(self) as client:
@@ -38,10 +48,21 @@ class AppTest(TestCase):
 
             self.assertEqual(json.loads(resp.get_data()), expected)
 
-    def get_validate_move(self):
+
+    def get_validate_move_check_status_200(self):
         with app.test_client(self) as client:
             resp = client.get("/api/v1/knight/c1/d3")
             self.assertEqual(resp.status_code, 200)
+
+    def get_validate_move_check_status_409(self):
+        with app.test_client(self) as client:
+            resp = client.get("/api/v1/knight/a1/e8")
+            self.assertEqual(resp.status_code, 409)
+    
+    def get_validate_move_check_status_404(self):
+        with app.test_client(self) as client:
+            resp = client.get("/api/v1/knight/c2/dd")
+            self.assertEqual(resp.status_code, 404)
 
     def test_get_validate_move_contetnt(self):
         with app.test_client(self) as client:

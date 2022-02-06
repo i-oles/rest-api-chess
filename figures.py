@@ -36,8 +36,8 @@ class Pawn(Figure):
         self.current_field = current_field
 
     def list_available_moves(self):
-        return Figure.list_available_moves_implement(self, "P", 0, 2)
-        """
+        # return Figure.list_available_moves_implement(self, "P", 0, 2)
+        
         try:
             chess.parse_square(self.current_field.lower())
         except ValueError:
@@ -52,7 +52,7 @@ class Pawn(Figure):
             return []
         else:
             return [letter + str(rank + 1)]
-        """
+        
     def validate_move(self, dest_field):
         return dest_field.capitalize() in self.list_available_moves()
 
