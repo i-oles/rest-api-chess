@@ -1,7 +1,6 @@
 from figures import Pawn, Knight, Bishop, Rook, Queen, King
 
 from flask import Flask
-import chess
 
 """
 bugs:
@@ -9,17 +8,19 @@ bugs:
 2. pawn: a8 -> zwraca error null, albo error field does not exist
 3. pawn: a1 --> zwraca a2, a3
 4. pawn on a1 never stands - ?
+5. testing abstrac method? correct?
+6. abstract method - correct?
+7. figure uppercase not allowed
+8. status codes correct
 
 questions:
-5. test create_king c7 -> C7 is ok?
-6. null is not in quotes in decription
-7. second GET - 'field does not exist' - is it necessary?
-8. 'move' can be hardcoded?
-9. validate moves should return bool?
-10. should I validate dest_field
-11. testing abstrac method? correct?
-12. abstract method - correct?
-13. comments?
+7. test create_king c7 -> C7 is ok?
+8. second GET - 'field does not exist' - is it necessary?
+9. 'move' can be hardcoded?
+10. 'validate_moves' should return bool?
+11. should I validate dest_field
+12. comments?
+13. pytest?
 
 1. flake8 - line 68 too long
 2. pip freeze -> too many imports?
@@ -28,8 +29,8 @@ questions:
 
 
 todo:
-4. security
-5. validate response status codes
+1. security
+2. validate response status codes
 
 """
 
@@ -52,7 +53,7 @@ def get_available_moves(chess_figure, current_field):
     piece = figures[chess_figure](current_field)
 
     if piece.list_available_moves():
-        error = "null"
+        error = None
     else:
         error = "Field does not exist."
 
@@ -64,14 +65,16 @@ def get_available_moves(chess_figure, current_field):
     }
 
 
-@app.route("/api/v1/<chess_figure>/<current_field>/<dest_field>", methods=["GET"])
+@app.route(
+    "/api/v1/<chess_figure>/<current_field>/<dest_field>", methods=["GET"]
+)  # noqa: E501
 def get_validate_move(chess_figure, current_field, dest_field):
 
     piece = figures[chess_figure](current_field)
 
     if piece.validate_move(dest_field):
         move = "valid"
-        error = "null"
+        error = None
     else:
         move = "invalid"
         error = "Current move is not permitted."

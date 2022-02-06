@@ -25,14 +25,14 @@ class PawnTest(TestCase):
         pawn = Pawn("A5")
         self.assertListEqual(pawn.list_available_moves(), ["A6"])
 
-        pawn = Pawn('A1')
-        self.assertListEqual(pawn.list_available_moves(), ['A2'])
+        pawn = Pawn("A1")
+        self.assertListEqual(pawn.list_available_moves(), ["A2"])
 
         pawn = Pawn("a2")
         self.assertListEqual(pawn.list_available_moves(), ["A3", "A4"])
 
-        pawn = Pawn('b7')
-        self.assertListEqual(pawn.list_available_moves(), ['B8'])
+        pawn = Pawn("b7")
+        self.assertListEqual(pawn.list_available_moves(), ["B8"])
 
         pawn = Pawn("bb")
         self.assertListEqual(pawn.list_available_moves(), [])
@@ -84,10 +84,12 @@ class BishopTest(TestCase):
     def test_list_available_moves(self):
         bishop = Bishop("g2")
         expected = sorted(["A8", "B7", "C6", "D5", "E4", "H3", "F3", "H1", "F1"])
+
         self.assertListEqual(sorted(bishop.list_available_moves()), expected)
 
         bishop = Bishop("G2")
         expected = sorted(["A8", "B7", "C6", "D5", "E4", "H3", "F3", "H1", "F1"])
+
         self.assertListEqual(sorted(bishop.list_available_moves()), expected)
 
         bishop = Bishop("a1")

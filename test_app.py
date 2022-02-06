@@ -1,4 +1,3 @@
-import unittest
 from unittest import TestCase
 from app import app
 import json
@@ -20,7 +19,7 @@ class AppTest(TestCase):
             resp = client.get("/api/v1/knight/A1")
             expected = {
                 "availableMoves": ["B3", "C2"],
-                "error": "null",
+                "error": None,
                 "figure": "knight",
                 "currentField": "A1",
             }
@@ -55,14 +54,14 @@ class AppTest(TestCase):
             expected = {
                 "move": "valid",
                 "figure": "king",
-                "error": "null",
+                "error": None,
                 "currentField": "A2",
                 "destField": "A3",
             }
 
             self.assertEqual(json.loads(resp.get_data()), expected)
 
-    def test_get_validate_move_json_data(self):
+    def test_get_validate_move_json_wrong_input(self):
         with app.test_client(self) as client:
             resp = client.get("/api/v1/knight/C4/V8")
 

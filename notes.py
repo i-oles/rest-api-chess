@@ -25,8 +25,10 @@ print([move for move in board.legal_moves])
 """
 
 board = chess.Board(fen=None)
-board.set_piece_at(chess.E4, chess.Piece.from_symbol("Q"))
-print(board)
-print([board.san(move)[1:] for move in board.legal_moves])
+board.set_piece_at(chess.E1, chess.Piece.from_symbol("P"))
+print([board.lan(move) for move in board.legal_moves])
+board.set_piece_at(chess.E7, chess.Piece.from_symbol("P"))
+print([board.lan(move) for move in board.legal_moves])
+board.set_piece_at(chess.E1, chess.Piece.from_symbol("N"))
+print([board.lan(move) for move in board.legal_moves])
 
-print(chess.parse_square('h8'))
