@@ -1,24 +1,26 @@
 from figures import Pawn, Knight, Bishop, Rook, Queen, King
+from werkzeug.exceptions import HTTPException
+import json
 
 from flask import Flask
 
 """
 bugs:
 X1. pawn promotion -> ex. 4 x D8
-X2. pawn: a8 -> zwraca error null, albo error field does not exist
+X2. pawn: a8 -> return error 'null'(my implementation), or 'error: field does not exist' (chess lib implementation)
 X3. pawn: a1 --> zwraca a2, a3
 X4. pawn on a1 never stands - ?
-5. testing abstrac method? correct?
-X6. abstract method - correct?
-7. status codes correct? where 500?
-8. status 404 -> return whole dict of just error
-9. test 500 status
+5. testing abstract method? correct?
+X6. abstract method implementation - correct?
+7. status codes return correct? where 500?
+8. status 404 -> return whole dict of just one line error
+9. test for 500 status
 
 questions:
-7. test create_king c7 -> C7 is ok?
+7. test 'create_king' c7 -> C7 is ok?
 8. second GET - 'field does not exist' - is it necessary?
-9. 'move' can be hardcoded?
-10. 'validate_moves' should return bool?
+9. 'move': 'valid' can be hardcoded or should be returned?
+10. 'validate_moves' can return bool?
 11. should I validate dest_field
 12. comments?
 13. pytest?
@@ -32,6 +34,7 @@ questions:
 todo:
 1. security
 2. validate response status codes
+3. add type_hints
 
 """
 
@@ -51,7 +54,7 @@ figures = {
 @app.route("/api/v1/<chess_figure>/<current_field>", methods=["GET"])
 def get_available_moves(chess_figure, current_field):
     if chess_figure not in figures:
-        return {"error": "Figure does not exist."}, 404
+        return {"error": f"Chess figure: {chess_figure} does not exist."}, 404
 
     piece = figures[chess_figure](current_field)
     if piece.list_available_moves():
@@ -70,12 +73,11 @@ def get_available_moves(chess_figure, current_field):
         }, 409
 
 
-@app.route(
-    "/api/v1/<chess_figure>/<current_field>/<dest_field>", methods=["GET"]
+@app.route("/api/v1/<chess_figure>/<current_field>/<dest_field>", methods=["GET"]
 )  # noqa: E501
 def get_validate_move(chess_figure, current_field, dest_field):
     if chess_figure not in figures:
-        return {"error": "Figure does not exist."}, 404
+        return {"error": f"Chess figure: {chess_figure} does not exist."}, 404
 
     piece = figures[chess_figure](current_field)
 
@@ -96,6 +98,18 @@ def get_validate_move(chess_figure, current_field, dest_field):
             "destField": dest_field.capitalize(),
         }, 409
 
+
+# https://sites.uclouvain.be/P2SINF/flask/errorhandling.html
+@app.errorhandler(HTTPException)
+def handle_exception(e):
+    response = e.get_response()
+    response.data = json.dumps({
+        "code": e.code,
+        "name": e.name,
+        "description": e.description,
+    })
+    response.content_type = "application/json"
+    return response
 
 if __name__ == "__main__":
     app.run(debug=True)
