@@ -15,7 +15,7 @@ class Figure(ABC):
             field = chess.parse_square(self.current_field.lower())
             board.set_piece_at(field, chess.Piece.from_symbol(piece_symbol))
             return [
-                board.san(move)[i_start : i_end].capitalize()
+                board.san(move)[i_start:i_end].capitalize()
                 for move in board.legal_moves
             ]
 
@@ -37,7 +37,7 @@ class Pawn(Figure):
 
     def list_available_moves(self):
         # return Figure.list_available_moves_implement(self, "P", 0, 2)
-        
+
         try:
             chess.parse_square(self.current_field.lower())
         except ValueError:
@@ -52,7 +52,7 @@ class Pawn(Figure):
             return []
         else:
             return [letter + str(rank + 1)]
-        
+
     def validate_move(self, dest_field):
         return dest_field.capitalize() in self.list_available_moves()
 

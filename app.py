@@ -7,7 +7,8 @@ from flask import Flask
 """
 bugs:
 X1. pawn promotion -> ex. 4 x D8
-X2. pawn: a8 -> return error 'null'(my implementation), or 'error: field does not exist' (chess lib implementation)
+X2. pawn: a8 -> return error 'null'(my implementation),
+    or 'error: field does not exist' (chess lib implementation)
 X3. pawn: a1 --> zwraca a2, a3
 X4. pawn on a1 never stands - ?
 5. testing abstract method? correct?
@@ -35,6 +36,7 @@ todo:
 1. security
 2. validate response status codes
 3. add type_hints
+4. flake8 validations
 
 """
 
@@ -63,7 +65,7 @@ def get_available_moves(chess_figure, current_field):
             "error": None,
             "figure": chess_figure,
             "currentField": current_field.capitalize(),
-        }, 200 
+        }, 200
     else:
         return {
             "availableMoves": piece.list_available_moves(),
@@ -73,7 +75,8 @@ def get_available_moves(chess_figure, current_field):
         }, 409
 
 
-@app.route("/api/v1/<chess_figure>/<current_field>/<dest_field>", methods=["GET"]
+@app.route(
+    "/api/v1/<chess_figure>/<current_field>/<dest_field>", methods=["GET"]
 )  # noqa: E501
 def get_validate_move(chess_figure, current_field, dest_field):
     if chess_figure not in figures:
@@ -87,7 +90,7 @@ def get_validate_move(chess_figure, current_field, dest_field):
             "figure": chess_figure,
             "error": None,
             "currentField": current_field.capitalize(),
-            "destField": dest_field.capitalize()
+            "destField": dest_field.capitalize(),
         }, 200
     else:
         return {
@@ -103,13 +106,16 @@ def get_validate_move(chess_figure, current_field, dest_field):
 @app.errorhandler(HTTPException)
 def handle_exception(e):
     response = e.get_response()
-    response.data = json.dumps({
-        "code": e.code,
-        "name": e.name,
-        "description": e.description,
-    })
+    response.data = json.dumps(
+        {
+            "code": e.code,
+            "name": e.name,
+            "description": e.description,
+        }
+    )
     response.content_type = "application/json"
     return response
+
 
 if __name__ == "__main__":
     app.run(debug=True)
