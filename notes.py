@@ -2,17 +2,24 @@
 import chess
 """
 
-letter = self.current_field[0].upper()
-rank = int(self.current_field[1:])
-if rank == 2:
-    return [
-        letter + str(rank + 1),
-        letter + str(rank + 2)
-        ]
-elif rank == 8:
-    return []
-else:
-    return [letter + str(rank + 1)]
+
+pawn implementation
+
+
+        try:
+            chess.parse_square(self.current_field.lower())
+        except ValueError:
+            return []
+
+        letter = self.current_field[0].upper()
+        rank = int(self.current_field[1:])
+
+        if rank == 2:
+            return [letter + str(rank + 1), letter + str(rank + 2)]
+        elif rank == 8:
+            return []
+        else:
+            return [letter + str(rank + 1)]
 
 
 
