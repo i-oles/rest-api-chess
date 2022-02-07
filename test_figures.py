@@ -42,7 +42,7 @@ def test_pawn_list_available_moves_4():
 
 def test_pawn_list_available_moves_5():
     pawn = Pawn("bb")
-    assert pawn.list_available_moves() == []
+    assert pawn.list_available_moves() is None
 
 
 def test_pawn_validate_move_1():
@@ -79,7 +79,7 @@ def test_knight_list_available_moves_2():
 
 def test_knight_list_available_moves_3():
     knight = Knight("hh")
-    assert sorted(knight.list_available_moves()) == []
+    assert knight.list_available_moves() is None
 
 
 def test_knight_validate_move_1():
@@ -122,7 +122,7 @@ def test_bishop_list_available_moves_3():
 
 def test_bishop_list_available_moves_4():
     bishop = Bishop("ee")
-    assert sorted(bishop.list_available_moves()) == []
+    assert bishop.list_available_moves() is None
 
 
 def test_bishop_validate_move_1():
@@ -221,7 +221,7 @@ def test_rook_list_available_moves_3():
 
 def test_rook_list_available_moves_4():
     rook = Rook("")
-    assert rook.list_available_moves() == []
+    assert rook.list_available_moves() is None
 
 
 def test_rook_validate_move_1():
@@ -322,7 +322,7 @@ def test_queen_list_available_moves_2():
 
 def test_queen_list_available_moves_3():
     queen = Queen("9")
-    assert queen.list_available_moves() == []
+    assert queen.list_available_moves() is None
 
 
 def test_queen_validate_move_1():
@@ -369,7 +369,7 @@ def test_king_list_available_moves_2():
 
 def test_king_list_available_moves_3():
     king = King("d55")
-    assert king.list_available_moves() == []
+    assert king.list_available_moves() is None
 
 
 def test_king_validate_move_1():

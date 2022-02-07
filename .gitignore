@@ -4,3 +4,5 @@ venv
 *.pyc
 db.json.lock
 .gitpod.yml
+.pytest_cache
+__pycache__

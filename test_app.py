@@ -4,8 +4,16 @@ import json
 
 def test_get_available_moves_check_status_200():
     with app.test_client() as client:
-        resp = client.get("/api/v1/queen/f8")
+        resp = client.get("/api/v1/knight/h8")
         assert resp.status_code == 200
+
+        expected = {
+            "availableMoves": ["F7", "G6"],
+            "error": None,
+            "figure": "knight",
+            "currentField": "H8",
+        }
+        assert json.loads(resp.get_data()) == expected
 
 
 def test_get_available_moves_check_status_409():
@@ -13,11 +21,31 @@ def test_get_available_moves_check_status_409():
         resp = client.get("/api/v1/queen/g10")
         assert resp.status_code == 409
 
+        expected = {
+            "availableMoves": [],
+            "error": "Field does not exist.",
+            "figure": "queen",
+            "currentField": "G10",
+        }
+        assert json.loads(resp.get_data()) == expected
 
-def test_get_available_moves_check_status_404():
+
+def test_get_available_moves_check_status_404_1():
     with app.test_client() as client:
         resp = client.get("/api/v1/quen/g1")
         assert resp.status_code == 404
+
+        expected = {"error": "Chess figure: quen does not exist."}
+        assert json.loads(resp.get_data()) == expected
+
+
+def test_get_available_moves_check_status_404_2():
+    with app.test_client() as client:
+        resp = client.get("/xxx")
+        assert resp.status_code == 404
+
+        expected = {"error": "Not Found"}
+        assert json.loads(resp.get_data()) == expected
 
 
 def test_get_available_moves_contetnt():
@@ -29,6 +57,8 @@ def test_get_available_moves_contetnt():
 def test_get_available_moves_json_data():
     with app.test_client() as client:
         resp = client.get("/api/v1/knight/A1")
+        assert resp.status_code == 200
+
         expected = {
             "availableMoves": ["B3", "C2"],
             "error": None,
@@ -42,6 +72,8 @@ def test_get_available_moves_json_data():
 def test_get_available_moves_json_wrong_input():
     with app.test_client() as client:
         resp = client.get("/api/v1/bishop/f15")
+        assert resp.status_code == 409
+
         expected = {
             "availableMoves": [],
             "error": "Field does not exist.",
@@ -79,6 +111,8 @@ def test_get_validate_move_contetnt():
 def test_get_validate_move_json_data():
     with app.test_client() as client:
         resp = client.get("/api/v1/king/a2/a3")
+        assert resp.status_code == 200
+
         expected = {
             "move": "valid",
             "figure": "king",
@@ -93,6 +127,7 @@ def test_get_validate_move_json_data():
 def test_get_validate_move_json_wrong_input():
     with app.test_client() as client:
         resp = client.get("/api/v1/knight/C4/V8")
+        assert resp.status_code == 409
 
         expected = {
             "move": "invalid",

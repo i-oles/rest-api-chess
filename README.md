@@ -7,6 +7,14 @@ pip install -r requirements.txt
 python3 app.py
 ```
 
+# Testing
+
+```
+pytest
+flake8 *.py
+black *.py
+```
+
 # Running
 
 ```
