@@ -27,8 +27,6 @@ black *.py
 python3 app.py
 
 List available moves for given figure and field:  
-
-
 `curl "http://127.0.0.1:5000/api/v1/knight/a1"`  
 
 proper response:  
@@ -40,8 +38,10 @@ proper response:
 "figure":"knight"
 }
 ```
-  
 
+___
+
+List available moves for given figure and field:  
 `curl "http://127.0.0.1:5000/api/v1/queen/a5"`  
 
 proper response:  
@@ -54,7 +54,9 @@ proper response:
 }
 ```
 
+___
 
+Validate moves for given starting and destination field:  
 `curl "http://127.0.0.1:5000/api/v1/knight/a1/b3"`  
 
 proper response:  
@@ -68,7 +70,9 @@ proper response:
 }
 ```
 
+___
 
+Validate moves for given starting and destination field:  
 `curl "http://127.0.0.1:5000/api/v1/queen/A5/a10"`  
 
 proper response:  
