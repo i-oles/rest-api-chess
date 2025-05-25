@@ -1,9 +1,9 @@
 # About
 
-This project is a simple REST API built with Flask.
+This project is a simple REST API built with Flask.  
 Users can:
 1. check available moves by passing particular figure name and starting field
-1. check if move from one field to another is valid
+1. validate move from one field to another
 
 # Development
 
@@ -27,7 +27,10 @@ black *.py
 python3 app.py
 
 List available moves for given figure and field:  
+
+
 `curl "http://127.0.0.1:5000/api/v1/knight/a1"`  
+
 proper response:  
 ```
 {
@@ -38,7 +41,9 @@ proper response:
 }
 ```
 
+
 `curl "http://127.0.0.1:5000/api/v1/queen/a5"`  
+
 proper response:  
 ```
 {
@@ -49,7 +54,9 @@ proper response:
 }
 ```
 
+
 `curl "http://127.0.0.1:5000/api/v1/knight/a1/b3"`  
+
 proper response:  
 ```
 {
@@ -60,6 +67,8 @@ proper response:
 "move":"valid"
 }
 ```
+
+
 `curl "http://127.0.0.1:5000/api/v1/queen/A5/a10"`  
 
 proper response:  
